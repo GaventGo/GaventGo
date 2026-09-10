@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F8F8FC;
+  color: #111111;
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+}
+
+/* Ticket-stub perforation: a dashed "tear line" between poster and details */
+.ticket-tear {
+  position: relative;
+}
+
+.ticket-tear::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-top: 2px dashed rgba(17, 17, 17, 0.12);
+}
+
+.ticket-tear::after,
+.ticket-notch-left,
+.ticket-notch-right {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background: #F8F8FC;
+}
+
+.ticket-notch-left {
+  left: -10px;
+}
+
+.ticket-notch-right {
+  right: -10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
