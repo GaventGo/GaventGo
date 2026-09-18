@@ -43,11 +43,13 @@ export default async function TicketDisplayPage({
     notFound();
   }
 
-  const { data: profile } = await supabase
+  const { data: profileRaw } = await supabase
     .from("profiles")
     .select("full_name")
     .eq("id", user.id)
     .single();
+
+  const profile = profileRaw as { full_name: string | null } | null;
 
   const order = typedItem.orders;
   const event = order?.events;
@@ -64,11 +66,13 @@ export default async function TicketDisplayPage({
     const admin = createAdminClient();
     await issueTicketsForOrder(admin, order.id);
 
-    const { data: refreshed } = await admin
+    const { data: refreshedRaw } = await admin
       .from("order_items")
       .select("qr_code")
       .eq("id", typedItem.id)
       .single();
+
+    const refreshed = refreshedRaw as { qr_code: string | null } | null;
 
     qrCode = refreshed?.qr_code ?? null;
   }
